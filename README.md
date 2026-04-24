@@ -23,25 +23,34 @@ KubeCore is structured to move beyond simple deployments, focusing on the mechan
 ```text
 /kubecore
 ├── k8s/
-│   ├── base/                  # The "Source of Truth" (Templates)
-│   │   ├── kustomization.yaml # Links all base files together
-│   │   ├── namespace.yaml
-│   │   ├── configmap.yaml
-│   │   ├── web-app.yaml       # Moved from workloads/ to base/
-│   │   ├── backend.yaml       # Moved from workloads/ to base/
-│   │   └── service.yaml       # Moved from networking/ to base/
-│   └── overlays/              # The "Environment Tweaks"
-│       ├── dev/
-│       │   ├── kustomization.yaml
-│       │   └── cm-patch.yaml  # e.g., Set color to 'blue' for Dev
-│       └── prod/
-│           ├── kustomization.yaml
-│           └── replica-patch.yaml # e.g., Scale to 5 replicas for Prod
-├── scripts/
-│   ├── setup-cluster.sh
-│   └── update-config.sh
-├── README.md
-└── .gitignore
+│   ├── service-1/                  # Project A: Independent Service-1 System
+│   │   ├── base/                   # Common templates (Deployment, Service)
+│   │   │   ├── kustomization.yaml  # Links all base files together
+│   │   │   ├── namespace.yaml
+│   │   │   ├── configmap.yaml
+│   │   └── overlays/               # Environment-specific overrides
+│   │       ├── dev/                # Local/Minikube settings
+│   │       └── prod/               # Cloud/Production settings
+│   │
+│   ├── service-2/                  # Project B: Independent Service-2 System
+│   │   ├── base/                   # Common templates
+│   │   │   ├── kustomization.yaml  # Links all base files together
+│   │   │   ├── namespace.yaml
+│   │   │   ├── configmap.yaml
+│   │   └── overlays/               # Environment-specific overrides
+│   │       ├── dev/
+│   │       └── prod/
+│   │
+│   └── platform-infra/             # Shared Cluster Resources
+│       └── base/                   # Namespaces, Traefik Middlewares, RBAC
+│
+├── scripts/                        # Automation & Orchestration
+│   ├── setup-cluster.sh            # Provisions Multi-Node Minikube
+│   ├── deploy-auth.sh              # Deploys Auth Project only
+│   └── deploy-data.sh              # Deploys Data Project only
+│
+├── README.md                       # Documentation & Architecture Labs
+└── .gitignore                      # Protection for local/sensitive files
 ```
 
 ## 🚀 Getting Started
