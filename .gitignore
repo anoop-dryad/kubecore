@@ -1,0 +1,8 @@
+# OS files
+.DS_Store
+
+# IDEs and Editors
+.vscode/
+
+# Minikube local state
+.minikube/
