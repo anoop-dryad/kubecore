@@ -15,6 +15,9 @@ spec:
       containers:
         - name: redis
           image: redis:8.0.2
+          command:
+            - redis-server
+            - "/redis/config/redis.conf"
           resources:
             requests:
               memory: 256Mi
@@ -25,7 +28,7 @@ spec:
           ports:
             - containerPort: 6379
           volumeMounts:
-            - mountPath: /redis/data
+            - mountPath: /data
               name: data
             - mountPath: /redis/config
               name: config
@@ -35,3 +38,6 @@ spec:
         - name: config
           configMap:
             name: redis-config-map
+            items:
+              - key: redis-config
+                path: redis.conf

@@ -3,4 +3,6 @@ kind: ConfigMap
 metadata:
   name: redis-config-map
 data:
-  redis-config: ""
+  redis-config: |
+    maxmemory 2mb
+    maxmemory-policy allkeys-lru
