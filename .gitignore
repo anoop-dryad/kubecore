@@ -6,3 +6,23 @@
 
 # Minikube local state
 .minikube/
+
+# Terraform working directories
+**/.terraform/*
+!**/.terraform/.gitkeep
+
+# Terraform state files (NEVER commit these)
+*.tfstate
+*.tfstate.*
+
+# Terraform crash log
+crash.log
+crash.*.log
+
+# Local variable files (might contain secrets)
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# CLI plan output
+*tfplan*
