@@ -2,7 +2,7 @@
 
 > Platform infrastructure for running Kubernetes workloads on AWS. Terraform-managed EKS cluster, VPC, IAM, and cluster add-ons. Consumed by application repos (e.g. `k8s-springboot-platform`).
 
-This is a learning project to mirror real-world platform-engineering patterns. The structure follows what you'd see at a production-grade company — separate platform repo, multi-environment via Terraform workspaces, modular Terraform.
+This is a project to mirror real-world platform-engineering patterns. The structure follows what you'd see at a production-grade company — separate platform repo, multi-environment via Terraform workspaces, modular Terraform.
 
 ---
 
