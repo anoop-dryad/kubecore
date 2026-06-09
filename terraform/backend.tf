@@ -19,13 +19,20 @@
 #   We bootstrap the bucket ONCE via AWS CLI (see README.md) and then this
 #   block points at it forever.
 #
-# Why no `key` is shown explicitly with workspaces:
-#   `workspace_key_prefix` makes Terraform compute the key based on the
-#   current workspace:
-#     default workspace   → s3://<bucket>/<key>
-#     dev workspace       → s3://<bucket>/workspaces/dev/<key>
-#     prod workspace      → s3://<bucket>/workspaces/prod/<key>
-#   Each workspace gets its own state file. Same code, isolated state per env.
+# NOTE: The `key` is INTENTIONALLY ABSENT from this block.
+#
+# Why? We use the "partial backend configuration" pattern. Each environment
+# (dev, staging, prod) has its own state file at a different key. The key
+# is supplied at init time via the `-backend-config` CLI flag, set by the
+# justfile recipes:
+#
+#   terraform init -backend-config="key=dev/kubecore"
+#   terraform init -backend-config="key=staging/kubecore"
+#   terraform init -backend-config="key=prod/kubecore"
+#
+# This gives strong isolation — switching envs requires an explicit re-init,
+# not just a workspace switch. Harder to accidentally apply dev changes to
+# prod.
 #
 # Why `use_lockfile = true` (no DynamoDB)?
 #   Older Terraform required a separate DynamoDB table to prevent concurrent
@@ -53,7 +60,8 @@ terraform {
 
     # Region of the state bucket (NOT necessarily where resources live —
     # though we use the same region for both to keep it simple).
-    region = var.region
+    # Inside backend "s3" {}, you must use literal values only: no var.region allowed
+    region = "eu-central-1"
 
     # Native S3 locking. Requires Terraform 1.10+.
     # Without this, two simultaneous `apply`s could corrupt state.
@@ -65,5 +73,10 @@ terraform {
     # Subdirectory prefix for non-default workspaces. The `default`
     # workspace is unaffected by this prefix.
     workspace_key_prefix = "workspaces"
+
+    # NOTE: `key` is supplied at init time via -backend-config
+    # See justfile for the pattern.
+
+
   }
 }

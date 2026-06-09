@@ -21,10 +21,9 @@
 #     - Know which workspace created a given resource (debug + audit)
 #   Resources can still add their own tags — they merge with these defaults.
 #
-# Workspace-aware tagging:
-#   `terraform.workspace` is a built-in expression returning the current
-#   workspace name. Including it as a tag means every resource shows which
-#   env it belongs to.
+# Configures HOW providers behave (region, default tags). The WHICH (versions)
+# is in versions.tf.
+# Tag every resource with `Environment` for cost tracking and audit.
 #
 # About `provider` aliases:
 #   You can configure the same provider multiple times with different settings
@@ -45,10 +44,10 @@ provider "aws" {
   # These can be overridden or extended per-resource via the `tags` argument.
   default_tags {
     tags = {
-      Project   = "kubecore"
-      Owner     = "terraform"
-      Origin    = "kubecore" # repo name — helps trace "where did this come from"
-      Workspace = terraform.workspace
+      Project     = "kubecore"
+      Owner       = "terraform"
+      Origin      = "kubecore" # repo name — helps trace "where did this come from"
+      Environment = var.environment
     }
   }
 

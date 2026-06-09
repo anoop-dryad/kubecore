@@ -78,9 +78,9 @@ Before any Terraform in this repo can run, an S3 bucket must exist to hold Terra
 
 A bootstrap script handles this automatically:
 
-\`\`\`bash
+```bash
 ./scripts/bootstrap.sh
-\`\`\`
+```
 
 The script:
 
@@ -97,10 +97,10 @@ State locking uses S3 native lock files (`use_lockfile = true`) — no separate 
 
 The script accepts environment variables for non-default setups:
 
-\`\`\`bash
+```bash
 REGION=eu-west-1 ./scripts/bootstrap.sh
 BUCKET_PREFIX=mycompany-tfstate ./scripts/bootstrap.sh
-\`\`\`
+```
 
 See `scripts/bootstrap.sh` for full details.
 

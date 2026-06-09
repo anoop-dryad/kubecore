@@ -1,7 +1,6 @@
-# OS files
+# Mac / editor cruft
 .DS_Store
-
-# IDEs and Editors
+.idea/
 .vscode/
 
 # Minikube local state
@@ -26,3 +25,10 @@ crash.*.log
 
 # CLI plan output
 *tfplan*
+
+# Init markers (justfile creates these per-env)
+**/.tf_init_*
+
+# Local credentials and tfvars overrides (if used)
+*.auto.tfvars
+*.auto.tfvars.json
