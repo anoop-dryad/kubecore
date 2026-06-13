@@ -60,6 +60,7 @@ Required versions:
 | AWS CLI   | 2.x             | `brew install awscli`         |
 | kubectl   | 1.28+           | `brew install kubernetes-cli` |
 | Helm      | 3.12+           | `brew install helm`           |
+| just      | 1.52.0          | `brew install just`           |
 
 Verify each:
 
@@ -68,6 +69,7 @@ terraform version
 aws --version
 kubectl version --client
 helm version
+just --version
 ```
 
 ---
