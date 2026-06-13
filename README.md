@@ -126,26 +126,22 @@ After the bootstrap is done:
 2. **Initialize Terraform:**
 
    ```bash
-   cd terraform
-   terraform init
+   # for dev environment
+   just tf-init-dev
+
+   # for staging environment
+   just tf-init-staging
    ```
 
    This downloads the AWS provider and configures the S3 backend.
 
-3. **Create the `dev` workspace:**
-
-   ```bash
-   terraform workspace new dev
-   terraform workspace list
-   # * dev
-   #   default
-   ```
-
-   The asterisk shows which workspace you're currently using.
-
 4. **Verify the setup:**
    ```bash
-   terraform plan
+   # for dev environment
+   just tf-plan-dev
+
+   # for staging environment
+   just tf-plan-staging
    ```
    Should report "No changes" since no resources are defined yet.
 
@@ -156,17 +152,14 @@ After the bootstrap is done:
 ### Daily Workflow
 
 ```bash
-cd terraform
-
-# Make sure you're in the right workspace
-terraform workspace show
-# Should print: dev
+# init for env
+just tf-init-dev
 
 # See what would change
-terraform plan
+just tf-plan-dev
 
 # Apply changes
-terraform apply
+just tf-apply-dev
 ```
 
 ### Adding Resources
@@ -201,7 +194,7 @@ s3://kubecore-tfstate-<account>/
 └── workspaces/
     ├── dev/kubecore.tfstate              ← dev workspace state
     ├── staging/kubecore.tfstate          ← staging workspace state
-    └── prod/kubecore.tfstate              ← prod workspace state
+    └── prod/kubecore.tfstate             ← prod workspace state
 ```
 
 For now, only `dev` is built. Same code supports additional workspaces when needed.
@@ -217,16 +210,13 @@ EKS is **not** free. The control plane alone is ~$73/month, regardless of how mu
 To save money, destroy everything at end of day:
 
 ```bash
-cd terraform
-terraform destroy
-# Type 'yes' to confirm
+tf-destroy-dev
 ```
 
 Recreate the next day:
 
 ```bash
-terraform apply
-# Type 'yes' to confirm
+tf-apply-dev
 ```
 
 A full tear-down + bring-up cycle takes ~25 minutes total (15 to apply, 10 to destroy). With nightly tear-down, monthly cost drops to ~$30-60.
@@ -491,4 +481,4 @@ aws configure
 
 ---
 
-_Last updated: 2026-06-08_
+_Last updated: 2026-06-13_
