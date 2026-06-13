@@ -25,6 +25,7 @@ kubecore/
 ├── k8s/                        # Optional: shared K8s manifests
 ├── .github/                    # CI/CD workflows (future)
 ├── .gitignore
+├── justfile
 └── README.md                   # this file
 ```
 
