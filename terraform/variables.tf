@@ -27,3 +27,25 @@ variable "environment" {
     error_message = "environment must be one of: dev, staging, prod."
   }
 }
+
+# ─── VPC variables ───────────────────────────────────────────────────────────
+
+variable "vpc_cidr_block" {
+  description = "CIDR block for the VPC"
+  type        = string
+}
+
+variable "azs" {
+  description = "Availability zones to deploy subnets into (at least 2)"
+  type        = list(string)
+}
+
+variable "public_subnets" {
+  description = "CIDR blocks for public subnets, one per AZ"
+  type        = list(string)
+}
+
+variable "private_subnets" {
+  description = "CIDR blocks for private subnets, one per AZ"
+  type        = list(string)
+}
