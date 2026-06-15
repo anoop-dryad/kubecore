@@ -12,3 +12,14 @@ module "vpc" {
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
 }
+
+# ─── IAM ─────────────────────────────────────────────────────────────────────
+# EKS-related IAM roles. Created now (free) so future EKS module can reference
+# them without changes.
+
+module "iam" {
+  source = "./iam"
+
+  environment  = var.environment
+  cluster_name = var.cluster_name
+}
